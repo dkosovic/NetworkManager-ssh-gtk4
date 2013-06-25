@@ -1,11 +1,11 @@
-%global commit 3d5321b74895d0d88cc928c23b465dcd58061288
+%global commit 241fee0f850ca9219b2623da43803558b256a846
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20130419git%{shortcommit}
+%global checkout 20130625git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 0.0.3
-Release: 0.8.%{checkout}%{?dist}
+Version: 0.0.4
+Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -79,6 +79,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
+- Can choose to not set VPN as default route
+
 * Fri Apr 19 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.3-0.8.20130419git3d5321b
 - DBUS and NetworkManager files in /etc are no longer config files
 - Other refactoring to conform with other NetworkManager VPN plugins
