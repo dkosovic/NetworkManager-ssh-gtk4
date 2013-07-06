@@ -1,10 +1,10 @@
-%global commit 241fee0f850ca9219b2623da43803558b256a846
+%global commit 6bf4649d4781a57636c032d07b0d46612fa91683
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20130625git%{shortcommit}
+%global checkout 20130706git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 0.0.4
+Version: 0.9.1
 Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
@@ -79,6 +79,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.1.20130706git6bf4649
+- Support for password and plain key authentication 
+
 * Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
 - Can choose to not set VPN as default route
 
