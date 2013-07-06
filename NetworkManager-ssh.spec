@@ -5,7 +5,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 0.9.1
-Release: 0.1.%{checkout}%{?dist}
+Release: 0.2.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -25,6 +25,7 @@ Requires: NetworkManager
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: gnome-keyring
+Requires: sshpass
 
 %global _privatelibs libnm-ssh-properties[.]so.*
 %global __provides_exclude ^(%{_privatelibs})$
@@ -79,6 +80,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.2.20130706git6bf4649
+- Depends on sshpass
+
 * Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.1.20130706git6bf4649
 - Support for password and plain key authentication 
 
