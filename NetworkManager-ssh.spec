@@ -5,7 +5,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 0.9.1
-Release: 0.3.%{checkout}%{?dist}
+Release: 0.4.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -56,7 +56,8 @@ the OpenSSH server with NetworkManager (GNOME files).
 if [ ! -f configure ]; then
   autoreconf -fvi
 fi
-%configure --disable-static --disable-dependency-tracking --enable-more-warnings=yes --with-gtkver=3
+CFLAGS="-Wno-deprecated-declarations" \
+	%configure --disable-static --disable-dependency-tracking --enable-more-warnings=yes --with-gtkver=3
 make %{?_smp_mflags}
 
 %install
@@ -80,6 +81,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Mon Aug 05 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.3.20130706git6bf4649
+- Remove deprecated warning
+
 * Fri Aug 02 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.1-0.3.20130706git6bf4649
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
