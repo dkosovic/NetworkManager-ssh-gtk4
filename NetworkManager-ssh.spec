@@ -39,11 +39,7 @@ the OpenSSH server with NetworkManager.
 Summary: NetworkManager VPN plugin for SSH - GNOME files
 Group: System Environment/Base
 Requires: NetworkManager-ssh = %{version}-%{release}
-%if 0%{?fedora} > 17
 Requires: nm-connection-editor
-%else
-Requires: NetworkManager-gnome
-%endif
 
 %description -n NetworkManager-ssh-gnome
 This package contains software for integrating VPN capabilities with
