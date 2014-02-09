@@ -1,11 +1,11 @@
-%global commit 6bf4649d4781a57636c032d07b0d46612fa91683
+%global commit 46247c270d55309087be926386af7fc569039fe0
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20130706git%{shortcommit}
+%global checkout 20140209git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 0.9.1
-Release: 0.5.%{checkout}%{?dist}
+Version: 0.9.2
+Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -38,7 +38,7 @@ the OpenSSH server with NetworkManager.
 %package -n NetworkManager-ssh-gnome
 Summary: NetworkManager VPN plugin for SSH - GNOME files
 Group: System Environment/Base
-Requires: NetworkManager-ssh = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: nm-connection-editor
 
 %description -n NetworkManager-ssh-gnome
@@ -77,6 +77,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Sun Feb 09 2014 Dan Fruehauf <malkodan@gmail.com> - 0.9.2-0.1.20140209git46247c2
++- Fixed upstream #25 (Fedora #1056810) - Bad strcmp usage
++- Fixed upstream #27 (Fedora #1061365, #1058028) - sshpass via fd
+
 * Sun Aug 11 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.5.20130706git6bf4649
 - Added $RPM_OPT_FLAGS to CFLAGS
 
