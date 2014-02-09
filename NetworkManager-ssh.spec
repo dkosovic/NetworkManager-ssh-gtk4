@@ -5,7 +5,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 0.9.2
-Release: 0.1.%{checkout}%{?dist}
+Release: 0.2.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -77,9 +77,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
-* Sun Feb 09 2014 Dan Fruehauf <malkodan@gmail.com> - 0.9.2-0.1.20140209git46247c2
-+- Fixed upstream #25 (Fedora #1056810) - Bad strcmp usage
-+- Fixed upstream #27 (Fedora #1061365, #1058028) - sshpass via fd
+* Sun Feb 09 2014 Dan Fruehauf <malkodan@gmail.com> - 0.9.2-0.2.20140209git46247c2
+- Fixed upstream #25 (Fedora #1056810) - Bad strcmp usage
+- Fixed upstream #27 (Fedora #1061365, #1058028) - sshpass via fd
 
 * Sun Aug 11 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.5.20130706git6bf4649
 - Added $RPM_OPT_FLAGS to CFLAGS
