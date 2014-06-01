@@ -1,11 +1,11 @@
-%global commit 46247c270d55309087be926386af7fc569039fe0
+%global commit 9d834f2deb5fbb2c6190867e0668dcc32ae21747
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20140209git%{shortcommit}
+%global checkout 20140601git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 0.9.2
-Release: 0.2.%{checkout}%{?dist}
+Version: 0.9.3
+Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -77,6 +77,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Sun Jun 01 2014 Dan Fruehauf <malkodan@gmail.com> - 0.9.3-0.1.20140601git9d834f2
+- Fixed GTK_STOCK deprecation errors
+- Czech translation by Jiri Kilmes
+
 * Sun Feb 09 2014 Dan Fruehauf <malkodan@gmail.com> - 0.9.2-0.2.20140209git46247c2
 - Fixed upstream #25 (Fedora #1056810) - Bad strcmp usage
 - Fixed upstream #27 (Fedora #1061365, #1058028) - sshpass via fd
