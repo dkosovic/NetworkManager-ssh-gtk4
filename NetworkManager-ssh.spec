@@ -1,11 +1,11 @@
-%global commit 9d834f2deb5fbb2c6190867e0668dcc32ae21747
+%global commit 60f03fefe3fdce4cef9cf35eec9e6ca1bc61af41
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20140601git%{shortcommit}
+%global checkout 20150713git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 0.9.3
-Release: 0.4.%{checkout}%{?dist}
+Version: 0.9.4
+Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -17,14 +17,15 @@ BuildRequires: dbus-devel
 BuildRequires: NetworkManager-devel
 BuildRequires: NetworkManager-glib-devel
 BuildRequires: glib2-devel
-BuildRequires: libgnome-keyring-devel
+BuildRequires: libtool intltool gettext
+BuildRequires: libnm-gtk-devel >= 0.9.10
+BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
 Requires: gtk3
 Requires: dbus
 Requires: NetworkManager
 Requires: openssh-clients
 Requires: shared-mime-info
-Requires: gnome-keyring
 Requires: sshpass
 
 %global _privatelibs libnm-ssh-properties[.]so.*
@@ -77,6 +78,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 
 %changelog
+* Mon Jul 13 2015 Dan Fruehauf<malkodan@gmail.com> - 0.9.4-0.1.20150713git60f03fe
+- Release 0.9.4
+
 * Tue Jun 16 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.3-0.4.20140601git9d834f2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
