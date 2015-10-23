@@ -1,6 +1,6 @@
-%global commit 3759c84a72bd67657c3244afe790592ff9bead5c
+%global commit 6a5c77615de60ae7ce6975c6e7080b68f78ecfea
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20150903git%{shortcommit}
+%global checkout 20151023git%{shortcommit}
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
@@ -9,8 +9,10 @@ Release: 0.1.%{checkout}%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-#Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-Source0: https://github.com/lkundrak/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+# https://github.com/danfruehauf/NetworkManager-ssh/pull/48
+Patch0: 0001-service-drop-use-of-API-that-s-gone.patch
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
@@ -25,7 +27,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
 Requires: gtk3
 Requires: dbus
-Requires: NetworkManager >= 1:1.1.0
+Requires: NetworkManager >= 1:1.2.0-0.3
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: sshpass
@@ -50,6 +52,7 @@ the OpenSSH server with NetworkManager (GNOME files).
 
 %prep
 %setup -q -n %{name}-%{commit}
+%patch0 -p1
 
 %build
 if [ ! -f configure ]; then
@@ -86,6 +89,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 
 %changelog
+* Mon Aug 31 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.1.20151023git6a5c776
+- Switch back to upstream source
+- Fix build with the NetworkManager 1.2 snapshot
+
 * Mon Aug 31 2015 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-0.1.20150831git2b4fb23
 - Update to 1.2 git snapshot with libnm-based properties plugin
 
