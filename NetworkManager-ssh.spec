@@ -1,24 +1,17 @@
-%global commit 6a5c77615de60ae7ce6975c6e7080b68f78ecfea
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global checkout 20151023git%{shortcommit}
-
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.0
-Release: 0.2.%{checkout}%{?dist}
+Release: 1%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-
-# https://github.com/danfruehauf/NetworkManager-ssh/pull/48
-Patch0: 0001-service-drop-use-of-API-that-s-gone.patch
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.0.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
 BuildRequires: NetworkManager-devel
-BuildRequires: NetworkManager-glib-devel >= 1:1.1.0
-BuildRequires: NetworkManager-libnm-devel >= 1:1.1.0
+BuildRequires: NetworkManager-glib-devel >= 1:1.2.0
+BuildRequires: NetworkManager-libnm-devel >= 1:1.2.0
 BuildRequires: glib2-devel
 BuildRequires: libtool intltool gettext
 BuildRequires: libnm-gtk-devel >= 0.9.10
@@ -27,7 +20,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
 Requires: gtk3
 Requires: dbus
-Requires: NetworkManager >= 1:1.2.0-0.3
+Requires: NetworkManager >= 1:1.2.0
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: sshpass
@@ -51,8 +44,7 @@ This package contains software for integrating VPN capabilities with
 the OpenSSH server with NetworkManager (GNOME files).
 
 %prep
-%setup -q -n %{name}-%{commit}
-%patch0 -p1
+%setup -q
 
 %build
 if [ ! -f configure ]; then
@@ -85,10 +77,14 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %files -n NetworkManager-ssh-gnome
 %{_libdir}/NetworkManager/lib*.so*
 %dir %{_datadir}/gnome-vpn-properties/ssh
-%{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
+%{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
+%{_datadir}/appdata/network-manager-ssh.appdata.xml
 
 %changelog
+* Sat Apr 23 2016 Lubomir Rintel <lkundrak@v3.sk> - 1.2.0-1
+- Update to 1.2.0 release
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-0.2.20151023git6a5c776
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
