@@ -1,7 +1,14 @@
+%if 0%{?fedora} < 28 && 0%{?rhel} < 8
+%bcond_without libnm_glib
+%else
+# Disable the legacy version by default
+%bcond_with libnm_glib
+%endif
+
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.6
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -25,9 +32,7 @@ Requires: openssh-clients
 Requires: shared-mime-info
 Requires: sshpass
 
-%global _privatelibs libnm-ssh-properties[.]so.*
-%global __provides_exclude ^(%{_privatelibs})$
-%global __requires_exclude ^(%{_privatelibs})$
+%global __provides_exclude ^libnm-.*\\.so
 
 %description
 This package contains software for integrating VPN capabilities with
@@ -55,6 +60,9 @@ CFLAGS="-DSECRET_API_SUBJECT_TO_CHANGE %{optflags}" \
 %endif
 %configure \
         --disable-static \
+%if %without libnm_glib
+        --without-libnm-glib \
+%endif
         --enable-more-warnings=yes \
         --with-dist-version=%{version}-%{release}
 make %{?_smp_mflags}
@@ -77,11 +85,17 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %files -n NetworkManager-ssh-gnome
 %{_libdir}/NetworkManager/lib*.so*
 %dir %{_datadir}/gnome-vpn-properties/ssh
-%{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 %{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
 %{_datadir}/appdata/network-manager-ssh.metainfo.xml
 
+%if %with libnm_glib
+%{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
+%endif
+
 %changelog
+* Thu Nov 30 2017 Lubomir Rintel <lkundrak@v3.sk> - 1.2.6-4
+- Drop libnm-glib for Fedora 28
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.6-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
