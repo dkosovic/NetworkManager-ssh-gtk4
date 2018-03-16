@@ -8,7 +8,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.7
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -16,12 +16,9 @@ Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.7.tar.gz#
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
-BuildRequires: NetworkManager-devel
-BuildRequires: NetworkManager-glib-devel >= 1:1.2.6
 BuildRequires: NetworkManager-libnm-devel >= 1:1.2.6
 BuildRequires: glib2-devel
 BuildRequires: libtool intltool gettext
-BuildRequires: libnm-gtk-devel >= 0.9.10
 BuildRequires: libnma-devel >= 1.1.0
 BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
@@ -31,6 +28,11 @@ Requires: NetworkManager >= 1:1.2.6
 Requires: openssh-clients
 Requires: shared-mime-info
 Requires: sshpass
+
+%if %with libnm_glib
+BuildRequires: NetworkManager-glib-devel >= 1:1.2.6
+BuildRequires: libnm-gtk-devel >= 0.9.10
+%endif
 
 %global __provides_exclude ^libnm-.*\\.so
 
@@ -93,6 +95,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Fri Mar 16 2018 Dan Fruehauf <malkodan@gmail.com> - 1.2.7-3
+- Drop libnm-glib for Fedora 28
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
