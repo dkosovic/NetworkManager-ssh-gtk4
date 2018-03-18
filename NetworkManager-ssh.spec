@@ -8,7 +8,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.7
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -44,7 +44,6 @@ the OpenSSH server with NetworkManager.
 Summary: NetworkManager VPN plugin for SSH - GNOME files
 Group: System Environment/Base
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: nm-connection-editor
 
 %description -n NetworkManager-ssh-gnome
 This package contains software for integrating VPN capabilities with
@@ -95,6 +94,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Sun Mar 18 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.2.7-4
+- Do not drag in the connection editor
+
 * Fri Mar 16 2018 Dan Fruehauf <malkodan@gmail.com> - 1.2.7-3
 - Drop libnm-glib for Fedora 28
 
