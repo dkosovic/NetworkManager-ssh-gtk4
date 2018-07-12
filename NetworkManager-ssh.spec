@@ -8,7 +8,7 @@
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.7
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Group: System Environment/Base
@@ -94,6 +94,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.7-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Sun Mar 18 2018 Lubomir Rintel <lkundrak@v3.sk> - 1.2.7-4
 - Do not drag in the connection editor
 
