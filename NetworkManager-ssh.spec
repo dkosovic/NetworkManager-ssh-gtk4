@@ -11,7 +11,6 @@ Version: 1.2.7
 Release: 5%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
-Group: System Environment/Base
 Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.7.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires: autoconf
@@ -42,7 +41,6 @@ the OpenSSH server with NetworkManager.
 
 %package -n NetworkManager-ssh-gnome
 Summary: NetworkManager VPN plugin for SSH - GNOME files
-Group: System Environment/Base
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description -n NetworkManager-ssh-gnome
