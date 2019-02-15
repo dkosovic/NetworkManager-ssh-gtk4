@@ -7,11 +7,12 @@
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 1.2.7
-Release: 6%{?dist}
+Version: 1.2.9
+Release: 1%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.7.tar.gz#/%{name}-%{version}.tar.gz
+Group: System Environment/Base
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.9.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
@@ -41,6 +42,7 @@ the OpenSSH server with NetworkManager.
 
 %package -n NetworkManager-ssh-gnome
 Summary: NetworkManager VPN plugin for SSH - GNOME files
+Group: System Environment/Base
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description -n NetworkManager-ssh-gnome
@@ -92,6 +94,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Fri Feb 15 2019 Dan Fruehauf <malkodan@gmail.com> - 1.2.9-1
+- Update from upstream to 1.2.9
+- Fix deprecated declarations
+
 * Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.7-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
