@@ -7,11 +7,11 @@
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 1.2.9
+Version: 1.2.10
 Release: 1%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.9.tar.gz#/%{name}-%{version}.tar.gz
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.10.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
@@ -92,6 +92,10 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Thu May 09 2019 Dan Fruehauf <malkodan@gmail.com> - 1.2.10-1
+- Update from upstream to 1.2.10
+- Fix 100% cpu usage bug
+
 * Fri Feb 15 2019 Dan Fruehauf <malkodan@gmail.com> - 1.2.9-1
 - Update from upstream to 1.2.9
 - Fix deprecated declarations
