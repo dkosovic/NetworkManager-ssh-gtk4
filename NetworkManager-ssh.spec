@@ -13,6 +13,7 @@ License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.11.tar.gz#/%{name}-%{version}.tar.gz
 
+BuildRequires: make
 BuildRequires: autoconf
 BuildRequires: gtk3-devel
 BuildRequires: NetworkManager-libnm-devel >= 1:1.2.6
