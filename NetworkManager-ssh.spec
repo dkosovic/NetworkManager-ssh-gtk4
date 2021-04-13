@@ -7,11 +7,11 @@
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
-Version: 1.2.11
-Release: 3%{?dist}
+Version: 1.2.12
+Release: 1%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
-Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.11.tar.gz#/%{name}-%{version}.tar.gz
+Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.12.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires: make
 BuildRequires: autoconf
@@ -93,6 +93,9 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %endif
 
 %changelog
+* Tue Apr 13 2021 Dan Fruehauf <malkodan@gmail.com> - 1.2.12-1
+- Initialize variables, compile on f34 (https://bugzilla.redhat.com/show_bug.cgi?id=1943040)
+
 * Mon Jan 25 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.11-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
