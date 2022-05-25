@@ -4,14 +4,23 @@
 # Disable the legacy version by default
 %bcond_with libnm_glib
 %endif
+%if 0%{?fedora} < 36 && 0%{?rhel} < 10
+%bcond_with gtk4
+%else
+%bcond_without gtk4
+%endif
 
 Summary: NetworkManager VPN plugin for SSH
 Name: NetworkManager-ssh
 Version: 1.2.12
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 URL: https://github.com/danfruehauf/NetworkManager-ssh
 Source0: https://github.com/danfruehauf/NetworkManager-ssh/archive/1.2.12.tar.gz#/%{name}-%{version}.tar.gz
+
+# NetworkManager-ssh Gtk4 PR patch :
+# https://github.com/danfruehauf/NetworkManager-ssh/pull/110.diff
+Patch1: NetworkManager-ssh-1.2.12-gtk4.patch
 
 BuildRequires: make
 BuildRequires: autoconf
@@ -19,7 +28,7 @@ BuildRequires: gtk3-devel
 BuildRequires: NetworkManager-libnm-devel >= 1:1.2.6
 BuildRequires: glib2-devel
 BuildRequires: libtool intltool gettext
-BuildRequires: libnma-devel >= 1.1.0
+BuildRequires: libnma-devel >= 1.2.0
 BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
 Requires: gtk3
@@ -31,7 +40,11 @@ Requires: sshpass
 
 %if %with libnm_glib
 BuildRequires: NetworkManager-glib-devel >= 1:1.2.6
-BuildRequires: libnm-gtk-devel >= 0.9.10
+BuildRequires: libnm-gtk-devel >= 1.2.0
+%endif
+
+%if %with gtk4
+BuildRequires: libnma-gtk4-devel
 %endif
 
 %global __provides_exclude ^libnm-.*\\.so
@@ -50,16 +63,25 @@ the OpenSSH server with NetworkManager (GNOME files).
 
 %prep
 %setup -q
+%patch1 -p1 -b .gtk4
+
+# Use /usr/share/metainfo for AppData files, should fix upstream
+sed -i 's!(datadir)/appdata!(datadir)/metainfo!' Makefile.am
+
+# Use /usr/share/dbus-1/system.d/ for D-Bus policy file, should fix upstream
+sed -i 's!(sysconfdir)/dbus-1/system.d!(datadir)/dbus-1/system.d!' Makefile.am
 
 %build
-if [ ! -f configure ]; then
-  autoreconf -fvi
-fi
+autoreconf -fi
+intltoolize
 %if 0%{?rhel} == 7
 CFLAGS="-DSECRET_API_SUBJECT_TO_CHANGE %{optflags}" \
 %endif
 %configure \
         --disable-static \
+%if %with gtk4
+        --with-gtk4 \
+%endif
 %if %without libnm_glib
         --without-libnm-glib \
 %endif
@@ -75,24 +97,34 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 %find_lang %{name}
 
 %files -f %{name}.lang
-%{_sysconfdir}/dbus-1/system.d/nm-ssh-service.conf
+%{_libdir}/NetworkManager/libnm-vpn-plugin-ssh.so
+%{_datadir}/dbus-1/system.d/nm-ssh-service.conf
 %{_prefix}/lib/NetworkManager/VPN/nm-ssh-service.name
 %{_libexecdir}/nm-ssh-service
-%{_libexecdir}/nm-ssh-auth-dialog
 %doc AUTHORS README ChangeLog NEWS
 %license COPYING
 
 %files -n NetworkManager-ssh-gnome
-%{_libdir}/NetworkManager/lib*.so*
-%dir %{_datadir}/gnome-vpn-properties/ssh
-%{_datadir}/gnome-vpn-properties/ssh/nm-ssh-dialog.ui
-%{_datadir}/appdata/network-manager-ssh.metainfo.xml
+%{_libexecdir}/nm-ssh-auth-dialog
+%{_libdir}/NetworkManager/libnm-gtk3-vpn-plugin-ssh-editor.so
+%{_metainfodir}/network-manager-ssh.metainfo.xml
+
+%if %with gtk4
+%{_libdir}/NetworkManager/libnm-gtk4-vpn-plugin-ssh-editor.so
+%endif
 
 %if %with libnm_glib
+%{_libdir}/NetworkManager/libnm-*-properties.so
 %{_sysconfdir}/NetworkManager/VPN/nm-ssh-service.name
 %endif
 
 %changelog
+* Wed May 25 2022 Douglas Kosovic <doug@uq.edu.au> - 1.2.12-4
+- Apply Gtk4 PR patch
+- Add conditional gtk4 support
+- Use /usr/share/metainfo for AppData files
+- Use /usr/share/dbus-1/system.d/ for D-Bus policy file
+
 * Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.12-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
@@ -208,7 +240,7 @@ rm -f %{buildroot}%{_libdir}/NetworkManager/lib*.la
 - Depends on sshpass
 
 * Sat Jul 06 2013 Dan Fruehauf <malkodan@gmail.com> - 0.9.1-0.1.20130706git6bf4649
-- Support for password and plain key authentication 
+- Support for password and plain key authentication
 
 * Tue Jun 25 2013 Dan Fruehauf <malkodan@gmail.com> - 0.0.4-0.1.20130625git241fee0
 - Can choose to not set VPN as default route
