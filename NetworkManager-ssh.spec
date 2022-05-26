@@ -31,7 +31,6 @@ BuildRequires: libtool intltool gettext
 BuildRequires: libnma-devel >= 1.2.0
 BuildRequires: libsecret-devel
 BuildRequires: libtool intltool gettext
-Requires: gtk3
 Requires: dbus
 Requires: NetworkManager >= 1:1.2.6
 Requires: openssh-clients
